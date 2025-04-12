@@ -1,0 +1,44 @@
+name: Build Branch
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install Dependencies
+        id: npm-ci
+        run: npm ci
+
+      - name: Check Format
+        id: check-fmt
+        run: npm run fmt-check
+
+      - name: Lint
+        id: lint
+        run: npm run lint
+
+      - name: Test
+        id: npm-ci-test
+        run: npm run test
+  maintain-release:
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: write
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    secrets: inherit
+    uses: ./.github/workflows/maintain-release.yaml

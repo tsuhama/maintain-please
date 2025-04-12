@@ -1,0 +1,12 @@
+# IDEA
+.idea
+*imp
+.DS_STORE
+
+# node
+dist
+node_modules
+build
+
+# Coverage
+coverage

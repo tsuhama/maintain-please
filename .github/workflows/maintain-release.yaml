@@ -1,0 +1,43 @@
+name: Maintain Release
+
+on:
+  workflow_call:
+
+jobs:
+  maintain-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: release please
+        uses: googleapis/release-please-action@v4
+        id: release-please
+        with:
+          # obtain package and version from package.json
+          release-type: node
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        if: ${{ steps.release-please.outputs.release_created }}
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        if: ${{ steps.release-please.outputs.release_created }}
+        with:
+          node-version-file: .node-version
+          cache: npm
+          scope: "@tsuhama"
+          registry-url: "https://npm.pkg.github.com"
+      - name: Install Dependencies
+        id: npm-ci
+        if: ${{ steps.release-please.outputs.release_created }}
+        run: npm ci
+      - name: Build
+        id: npm-build
+        if: ${{ steps.release-please.outputs.release_created }}
+        run: npm run build
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: npm-publish
+        if: ${{ steps.release-please.outputs.release_created }}
+        run: npm publish
