@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 (2025-04-12)
+
+
+### Features
+
+* initial release ([7a61119](https://github.com/tsuhama/maintain-please/commit/7a611190021d5f04b4e04376eade0cd194fa9262))
+
 ## [1.1.2](https://github.com/tsuhama/release-please-please-me/compare/v1.1.1...v1.1.2) (2025-04-12)
 
 

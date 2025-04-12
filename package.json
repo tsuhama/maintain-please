@@ -1,6 +1,6 @@
 {
   "name": "@tsuhama/maintain-please",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "automated advanced maintenance release workflows using conventional commits",
   "repository": {
     "type": "git",
