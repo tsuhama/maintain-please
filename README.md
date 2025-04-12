@@ -1,7 +1,8 @@
-# Release Please Please Me
+# Maintain Please
 
-Inspired by Google's release-please and the Beatles...
-Automation for more advanced release workflows like managing multiple release branches or backport releases.
+Inspired by Google's release-please, this project is intended as an extension for projects using the release please action and relying on
+the stable version / maintenance branch workflow.
+It provides automation for e.g. creating and cleaning up maintenance branches according to projects maintenance support policy or creation of backport pull requests targeting all maintenance branches.
 
 - [Concepts and Workflows](#concepts-and-workflows)
 - [Configuration](#configuration)
