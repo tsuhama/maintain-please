@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/tsuhama/maintain-please/compare/v1.0.0...v1.0.1) (2025-04-13)
+
+
+### Bug Fixes
+
+* skip stable branch creation on release if already exists ([#2](https://github.com/tsuhama/maintain-please/issues/2)) ([eb72b49](https://github.com/tsuhama/maintain-please/commit/eb72b49b6b1b3c6bc81ed85b8535f2cf99220254))
+
 ## 1.0.0 (2025-04-12)
 
 
