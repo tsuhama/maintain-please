@@ -1,5 +1,8 @@
 # Maintain Please
 
+![CI](https://github.com/tsuhama/maintain-please/actions/workflows/ci.yaml/badge.svg)
+[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+
 Inspired by Google's release-please, this project is intended as an extension for projects using the release please action and relying on
 the stable version / maintenance branch workflow.
 It provides automation for e.g. creating and cleaning up maintenance branches according to projects maintenance support policy or creation of backport pull requests targeting all maintenance branches.
