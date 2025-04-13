@@ -21,4 +21,16 @@ describe("github", () => {
       ).toBeGreaterThan(0);
     });
   });
+  describe("branch exists", () => {
+    test("should return true for main", async () => {
+      const result = await git.existsBranch("main");
+      expect(result).toBe(true);
+    });
+    test("should return false for non existing branch", async () => {
+      const result = await git.existsBranch(
+        "branch-name-which-will-never-exist",
+      );
+      expect(result).toBe(false);
+    });
+  });
 });
