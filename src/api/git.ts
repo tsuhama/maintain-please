@@ -1,11 +1,13 @@
 // Instance per repository
 import { Octokit } from "@octokit/rest";
+import { RequestError } from "@octokit/types";
 
 export interface GitControl {
-  getBranches(): Branch[];
+  getBranches(): Promise<Branch[]>;
   getBranch(branchName: string): Promise<Branch>;
   getTag(tagName: string): Promise<Tag>;
   createBranchFromTag(tag: Tag, newBranchName: string): Promise<Branch>;
+  existsBranch(branchName: string): Promise<boolean>;
   deleteBranch(branch: Branch): Promise<void>;
   createPullRequest(
     sourceBranch: Branch,
@@ -85,6 +87,23 @@ export class GitHubControl implements GitControl {
     };
   }
 
+  async existsBranch(branchName: string): Promise<boolean> {
+    return this.octokit.git
+      .getRef({
+        repo: this.repository.repo,
+        owner: this.repository.owner,
+        ref: `heads/${branchName}`,
+      })
+      .then(() => true)
+      .catch((err: RequestError) => {
+        if (err.status === 404) {
+          return false;
+        } else {
+          throw err;
+        }
+      });
+  }
+
   async getTag(tagName: string): Promise<Tag> {
     const {
       data: {
@@ -144,7 +163,21 @@ export class GitHubControl implements GitControl {
     });
   }
 
-  getBranches(): Branch[] {
-    return [];
+  async getBranches(): Promise<Branch[]> {
+    const branches: { name: string; commit: { url: string; sha: string } }[] =
+      [];
+    const response = await this.octokit.request(
+      "/repos/{owner}/{repo}/branches",
+      {
+        owner: this.repository.owner,
+        repo: this.repository.repo,
+      },
+    );
+    branches.push(...response.data);
+    return branches.map((value) => ({
+      name: value.name,
+      url: value.commit.url,
+      sha: value.commit.sha,
+    }));
   }
 }

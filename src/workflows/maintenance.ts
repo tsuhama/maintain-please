@@ -13,21 +13,32 @@ export async function maintainStableVersionBranches(
   console.info(
     `running stable version maintenance for latest release ${releasedVersion}`,
   );
-  const releaseTag = await git.getTag(
-    `${releasedVersion.major}.${releasedVersion.minor}.${releasedVersion.patch}`,
-  );
-  // create stable-version branch for newly released version
-  console.info(
-    `creating stable version branch for release tag ${releaseTag.name} with sha ${releaseTag.sha}`,
-  );
   const stableVersion = toStableVersion(releasedVersion);
-  const stableVersionBranch = await git.createBranchFromTag(
-    releaseTag,
-    `stable-${stableVersion.major}.${stableVersion.minor}`,
+  const stableVersionBranchName = `stable-${stableVersion.major}.${stableVersion.minor}`;
+  const stableVersionBranchExists = await git.existsBranch(
+    stableVersionBranchName,
   );
-  console.info(
-    `successfully created stable version branch ${stableVersionBranch.name} with sha ${stableVersionBranch.sha}`,
-  );
+  if (stableVersionBranchExists) {
+    console.info(
+      `stable version branch ${stableVersionBranchName} already exists.`,
+    );
+  } else {
+    const releaseTag = await git.getTag(
+      `${releasedVersion.major}.${releasedVersion.minor}.${releasedVersion.patch}`,
+    );
+    // create stable-version branch for newly released version
+    console.info(
+      `creating stable version branch for release tag ${releaseTag.name} with sha ${releaseTag.sha}`,
+    );
+    const stableVersionBranch = await git.createBranchFromTag(
+      releaseTag,
+      stableVersionBranchName,
+    );
+    console.info(
+      `successfully created stable version branch ${stableVersionBranch.name} with sha ${stableVersionBranch.sha}`,
+    );
+  }
+
   // delete all stable-version branches based on support policy config
   const stableVersionBranches = await getStableVersionBranches(
     git,
@@ -48,13 +59,13 @@ export async function getStableVersionBranches(
   git: GitControl,
   matcher: StableVersionMatcher,
 ): Promise<StableVersionBranch[]> {
-  return git
-    .getBranches()
+  const branches = await git.getBranches();
+  return branches
     .map((it) => toStaleVersionBranch(matcher, it))
     .filter((it) => it !== null);
 }
 
-interface StableVersionBranch {
+export interface StableVersionBranch {
   readonly branch: Branch;
   readonly version: StableVersion;
 }

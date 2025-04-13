@@ -7,7 +7,15 @@ import prettier from "eslint-plugin-prettier";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 
 export default defineConfig([
-  { ignores: ["**/coverage", "**/node_modules", "jest.config.js", "**/build"] },
+  {
+    ignores: [
+      "**/coverage",
+      "**/node_modules",
+      "jest.config.js",
+      "**/build",
+      "test",
+    ],
+  },
   {
     files: ["**/*.{js,mjs,cjs,ts}"],
     plugins: { js },

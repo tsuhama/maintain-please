@@ -31,8 +31,11 @@ jobs:
         run: npm run lint
 
       - name: Test
+        env:
+          TEST_REPOSITORY_TOKEN: ${{ secrets.TEST_REPOSITORY_TOKEN }}
         id: npm-ci-test
         run: npm run test
+
   maintain-release:
     permissions:
       contents: write
