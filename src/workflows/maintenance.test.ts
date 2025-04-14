@@ -1,11 +1,8 @@
-import { Branch, GitControl, Tag } from "../../src/api/git";
-import {
-  maintainStableVersionBranches,
-  StableVersionMatcher,
-  SupportPolicy,
-} from "../../src";
-import { parseSemanticVersion } from "../../src/core/version";
-import { StableVersionBranch } from "../../src/workflows/maintenance";
+import { Branch, GitControl, Tag } from "../../src/api/git.js";
+import { SupportPolicy } from "../../src/core/support.js";
+import { StableVersionMatcher } from "../../src/core/matcher.js";
+import { parseSemanticVersion } from "../../src/core/version.js";
+import {maintainStableVersionBranches, StableVersionBranch} from "../../src/workflows/maintenance.js";
 import { error } from "@actions/core";
 
 describe("maintenance", () => {

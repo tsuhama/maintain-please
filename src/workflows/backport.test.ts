@@ -1,5 +1,7 @@
-import { backportFixBranch, GitControl, StableVersionMatcher } from "../../src";
-import * as maintenance from "../../src/workflows/maintenance";
+import { StableVersionMatcher } from "../../src/core/matcher.js";
+import { GitControl } from "../../src/api/git.js";
+import { backportFixBranch } from "../../src/workflows/backport.js";
+import * as maintenance from "../../src/workflows/maintenance.js";
 
 jest.mock("../../src/workflows/maintenance");
 
