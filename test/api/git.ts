@@ -33,4 +33,17 @@ describe("github", () => {
       expect(result).toBe(false);
     });
   });
+  describe("get branch", () => {
+    test("should return branch for main", async () => {
+      const response = await git.getBranch("main");
+      expect(response.name).toBe("main");
+    });
+  });
+  describe("get tag", () => {
+    test("should return release tag", async () => {
+      const response = await git.getTag("0.0.1");
+      expect(response.name).toBe("0.0.1");
+      expect(response.sha).toBe("fb9bf76756a4776d0c6f4a86d6cdab86d305aecb");
+    });
+  });
 });

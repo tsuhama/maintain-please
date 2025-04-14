@@ -10,8 +10,10 @@ export interface GitControl {
   existsBranch(branchName: string): Promise<boolean>;
   deleteBranch(branch: Branch): Promise<void>;
   createPullRequest(
-    sourceBranch: Branch,
-    targetBranch: Branch,
+    title: string,
+    body: string,
+    sourceBranchName: string,
+    targetBranchName: string,
   ): Promise<PullRequest>;
 }
 
@@ -53,15 +55,9 @@ export interface Tag {
 }
 
 export interface PullRequest {
-  readonly headBranchName: string;
-  readonly baseBranchName: string;
-  readonly number: number;
-  readonly mergeCommitOid?: string;
+  readonly url: string;
   readonly title: string;
-  readonly body: string;
-  readonly labels: string[];
-  readonly files: string[];
-  readonly sha?: string;
+  readonly number: number;
 }
 
 export class GitHubControl implements GitControl {
@@ -139,19 +135,26 @@ export class GitHubControl implements GitControl {
   }
 
   async createPullRequest(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sourceBranch: Branch,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    targetBranch: Branch,
+    title: string,
+    body: string,
+    sourceBranchName: string,
+    targetBranchName: string,
   ): Promise<PullRequest> {
+    const response: { data: { url: string; title: string; number: number } } =
+      await this.octokit.request({
+        method: "POST",
+        url: "/repos/{owner}/{repo}/pulls",
+        owner: this.repository.owner,
+        repo: this.repository.repo,
+        title: title,
+        body: body,
+        head: sourceBranchName,
+        base: targetBranchName,
+      });
     return {
-      baseBranchName: "",
-      number: 0,
-      title: "",
-      headBranchName: "",
-      body: "",
-      labels: [],
-      files: [],
+      url: response.data.url,
+      title: response.data.title,
+      number: response.data.number,
     };
   }
 
