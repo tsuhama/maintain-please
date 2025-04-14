@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/tsuhama/maintain-please/compare/v1.0.1...v1.1.0) (2025-04-14)
+
+
+### Features
+
+* create backport PRs against stable version branches ([#6](https://github.com/tsuhama/maintain-please/issues/6)) ([6b8728f](https://github.com/tsuhama/maintain-please/commit/6b8728f3a26e2f618f6dac82d763e3f1eca4bb47))
+
 ## [1.0.1](https://github.com/tsuhama/maintain-please/compare/v1.0.0...v1.0.1) (2025-04-13)
 
 
