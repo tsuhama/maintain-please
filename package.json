@@ -7,9 +7,9 @@
     "url": "https://github.com/tsuhama/maintain-please.git"
   },
   "main": "build/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "test": "npx jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
     "test-coverage": "npx jest --coverage",
     "build": "tsc --build",
     "fmt-check": "npx prettier --check .",

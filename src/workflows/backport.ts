@@ -1,7 +1,7 @@
 // backporting fix branch to all stable version branches by creating pull request against each of the stable version
-import { GitControl } from "../api/git";
-import { getStableVersionBranches } from "./maintenance";
-import { StableVersionMatcher } from "../core/matcher";
+import { GitControl } from "../api/git.js";
+import { getStableVersionBranches } from "./maintenance.js";
+import { StableVersionMatcher } from "../core/matcher.js";
 
 export async function backportFixBranch(
   git: GitControl,

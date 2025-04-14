@@ -3,7 +3,7 @@ import {
   SemanticVersion,
   StableVersion,
   toStableVersion,
-} from "./version";
+} from "./version.js";
 
 export interface SupportPolicy {
   supports(version: StableVersion): boolean;

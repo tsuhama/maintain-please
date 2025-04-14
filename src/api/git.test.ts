@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { createGitHubControl } from "../../src";
+import { createGitHubControl } from "./git.js";
 
 describe("github", () => {
   dotenv.config();
