@@ -1,4 +1,4 @@
-import { createNMinusRangeSupportPolicy } from "../../src/core/support.js";
+import { createNMinusRangeSupportPolicy } from "./support.js";
 
 describe("support policy", () => {
   describe("n minus support policy", () => {

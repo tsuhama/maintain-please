@@ -1,4 +1,4 @@
-import { Version } from "release-please/build/src/version";
+import { Version } from "release-please/build/src/version.js";
 
 export interface SemanticVersion {
   readonly patch: number;

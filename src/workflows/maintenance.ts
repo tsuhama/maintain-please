@@ -1,7 +1,7 @@
-import { Branch, GitControl } from "../api/git";
-import { StableVersion, toStableVersion } from "../core/version";
-import { SupportPolicy } from "../core/support";
-import { StableVersionMatcher } from "../core/matcher";
+import { Branch, GitControl } from "../api/git.js";
+import { StableVersion, toStableVersion } from "../core/version.js";
+import { SupportPolicy } from "../core/support.js";
+import { StableVersionMatcher } from "../core/matcher.js";
 
 // should be executed on creation of LATEST release and NOT on backport releases
 export async function maintainStableVersionBranches(
