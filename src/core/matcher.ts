@@ -1,5 +1,5 @@
-import { Branch } from "../api/git";
-import { StableVersion } from "./version";
+import { Branch } from "../api/git.js";
+import { StableVersion } from "./version.js";
 
 export interface StableVersionMatcher {
   matches(branch: Branch): boolean;

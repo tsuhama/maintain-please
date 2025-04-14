@@ -1,5 +1,5 @@
-import { Branch } from "../../src/api/git";
-import { createPrefixStableVersionMatcher } from "../../src";
+import { Branch } from "../api/git.js";
+import { createPrefixStableVersionMatcher } from "./matcher.js";
 
 describe("maintenance", () => {
   describe("prefix based stable version matcher", () => {

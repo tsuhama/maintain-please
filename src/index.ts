@@ -1,8 +1,11 @@
-export { backportFixBranch } from "./workflows/backport";
-export { maintainStableVersionBranches } from "./workflows/maintenance";
-export { GitControl, createGitHubControl } from "./api/git";
+export { backportFixBranch } from "./workflows/backport.js";
+export { maintainStableVersionBranches } from "./workflows/maintenance.js";
+export { GitControl, createGitHubControl } from "./api/git.js";
 export {
   StableVersionMatcher,
   createPrefixStableVersionMatcher,
-} from "./core/matcher";
-export { SupportPolicy, createNMinusRangeSupportPolicy } from "./core/support";
+} from "./core/matcher.js";
+export {
+  SupportPolicy,
+  createNMinusRangeSupportPolicy,
+} from "./core/support.js";

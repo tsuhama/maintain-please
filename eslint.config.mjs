@@ -11,9 +11,9 @@ export default defineConfig([
     ignores: [
       "**/coverage",
       "**/node_modules",
-      "jest.config.js",
+      "jest.config.cjs",
       "**/build",
-      "test",
+      "**/*.test.ts",
     ],
   },
   {
