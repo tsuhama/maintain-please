@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/tsuhama/maintain-please/compare/v1.1.0...v2.0.0) (2025-04-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* prod dependencies cleanup ([#11](https://github.com/tsuhama/maintain-please/issues/11))
+
+### Features
+
+* prod dependencies cleanup ([#11](https://github.com/tsuhama/maintain-please/issues/11)) ([3da74dd](https://github.com/tsuhama/maintain-please/commit/3da74dd01839262abef5ae7a2a7155db9a5bb341))
+
 ## [1.1.0](https://github.com/tsuhama/maintain-please/compare/v1.0.1...v1.1.0) (2025-04-14)
 
 
