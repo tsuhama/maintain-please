@@ -8,7 +8,7 @@ the stable version / maintenance branch workflow.
 It provides automation for e.g. creating and cleaning up maintenance branches according to projects maintenance support policy or creation of backport pull requests targeting all maintenance branches.
 
 - [Concepts and Workflows](#concepts-and-workflows)
-- [Configuration](#configuration)
+- [GitHub Actions](#github-actions-)
 
 ## Concepts and Workflows
 
@@ -80,4 +80,6 @@ There are two major strategies for consideration for applying patches to the sta
 1. `cherry-pick`: With this strategy, the patch can be applied in any arbitrary way without considering the base branch. Once it is squash merged into the main, the automation can try to cherry-pick the squash commit into all bugfix-branch created for each stable version branch. The number of hotfix branches and PRs created, each equals the number of stable version branches maintained.
 2. `merge-base`: Using this strategy, we force the maintainer to create the hotfix branch using the merge base of main (or the latest stable version branch, the bug applies to) and the oldest stable version branch. This strategy will minimize the number of created branches to exactly one using a common merge base, which can be ideally pulled into all stable version branches. Although, the number of PRs created still equals the number of active stable version branches. The automation using this strategy might be triggered on comments or labels changes on the PR created initially to pull the hotfix into (most likely targeting the latest stable version branches).
 
-## Configuration
+## GitHub Actions
+
+For the workflows defined in [Sub-Workflows](#sub-workflows), we do provide corresponding GitHub actions defined in a separate [repository](https://github.com/tsuhama/maintain-please-actions). Refer to the documentation and quick start guide of this repository for more details.
