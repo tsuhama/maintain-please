@@ -8,7 +8,7 @@ the stable version / maintenance branch workflow.
 It provides automation for e.g. creating and cleaning up maintenance branches according to projects maintenance support policy or creation of backport pull requests targeting all maintenance branches.
 
 - [Concepts and Workflows](#concepts-and-workflows)
-- [GitHub Actions](#github-actions-)
+- [GitHub Actions](#github-actions)
 
 ## Concepts and Workflows
 
