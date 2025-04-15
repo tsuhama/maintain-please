@@ -9,8 +9,9 @@ module.exports = {
   moduleFileExtensions: ["ts", "js"],
   testMatch: ["**/*.test.ts"],
   resolver: "ts-jest-resolver",
+  extensionsToTreatAsEsm: [".ts"],
   transformIgnorePatterns: ["node_modules"],
   transform: {
-    "^.+\.tsx?$": ["ts-jest", {}],
+    "^.+\.tsx?$": ["ts-jest", { useESM: true }],
   },
 };

@@ -1,52 +1,43 @@
-import { StableVersionMatcher } from "../core/matcher.js";
-import { GitControl } from "../api/git.js";
+import {
+  createPrefixStableVersionMatcher,
+  StableVersionMatcher,
+} from "../core/matcher.js";
 import { backportFixBranch } from "./backport.js";
-import * as maintenance from "./maintenance.js";
-
-jest.mock("./maintenance.js");
+import { jest } from "@jest/globals";
 
 describe("backport", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+  const git = {
+    createPullRequest: jest
+      .fn()
+      .mockReturnValue(Promise.resolve({ title: "title", url: "", number: 1 })),
+    getBranch: jest
+      .fn()
+      .mockReturnValue(Promise.resolve({ name: "name", sha: "", url: "" })),
+    getBranches: jest.fn(),
+  };
   describe("backport fix branch", () => {
-    const git: Partial<GitControl> = {
-      createPullRequest: jest.fn((title, body, source, target) =>
-        Promise.resolve({ title: title, url: "", number: 1 }),
-      ),
-      getBranch: jest.fn((name) =>
-        Promise.resolve({ name: name, sha: "", url: "" }),
-      ),
-    };
-    const matcher: Partial<StableVersionMatcher> = {};
-    const getStableVersionBranchesSpy = jest.spyOn(
-      maintenance,
-      "getStableVersionBranches",
-    );
+    const matcher = createPrefixStableVersionMatcher("stable-");
     test("should not create any pr, if there is no stable version branch", async () => {
-      getStableVersionBranchesSpy.mockImplementation(() => Promise.resolve([]));
+      git.getBranches.mockReturnValueOnce(Promise.resolve([]));
       await backportFixBranch(
-        git as GitControl,
+        git as any,
         matcher as StableVersionMatcher,
         "bugfix-test",
       );
       expect(git.createPullRequest).not.toHaveBeenCalled();
     });
     test("should create pr for each stable version present", async () => {
-      getStableVersionBranchesSpy.mockImplementation(() =>
+      git.getBranches.mockReturnValue(
         Promise.resolve([
-          {
-            branch: { name: "stable-1.0", sha: "", url: "" },
-            version: { major: 1, minor: 0 },
-          },
-          {
-            branch: { name: "stable-2.1", sha: "", url: "" },
-            version: { major: 2, minor: 1 },
-          },
+          { name: "stable-1.0", sha: "", url: "" },
+          { name: "stable-2.1", sha: "", url: "" },
         ]),
       );
       await backportFixBranch(
-        git as GitControl,
+        git as any,
         matcher as StableVersionMatcher,
         "bugfix-test",
       );

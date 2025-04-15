@@ -1,4 +1,4 @@
-import { Branch, GitControl, Tag } from "../api/git.js";
+import { Branch, Tag } from "../api/git.js";
 import { SupportPolicy } from "../core/support.js";
 import { StableVersionMatcher } from "../core/matcher.js";
 import { parseSemanticVersion } from "../core/version.js";
@@ -7,18 +7,21 @@ import {
   StableVersionBranch,
 } from "./maintenance.js";
 import { error } from "@actions/core";
+import { jest } from "@jest/globals";
 
 describe("maintenance", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
   describe("maintainStableVersionBranches", () => {
-    const defaultGitMock: Partial<GitControl> = {
-      existsBranch: jest.fn((branchName) => Promise.resolve(true)),
-      getBranches: jest.fn(() => Promise.resolve([])),
-      createBranchFromTag: jest.fn((_, branchName) =>
-        Promise.resolve({ name: branchName, sha: "", url: "" }),
-      ),
+    const git = {
+      existsBranch: jest.fn().mockReturnValue(Promise.resolve(true)),
+      getBranches: jest.fn().mockReturnValue(Promise.resolve([])),
+      createBranchFromTag: jest
+        .fn()
+        .mockReturnValue(Promise.resolve({ name: "name", sha: "", url: "" })),
+      getTag: jest.fn(),
+      deleteBranch: jest.fn(),
     };
     const defaultSupportPolicyMock: Partial<SupportPolicy> = {
       getLatestVersion: jest.fn(() => parseSemanticVersion("1.0.0")),
@@ -28,26 +31,20 @@ describe("maintenance", () => {
       matches: jest.fn((_) => false),
     };
     test("should not create stable version branch if already exists", async () => {
-      const git: Partial<GitControl> = {
-        ...defaultGitMock,
-        existsBranch: jest.fn((_) => Promise.resolve(true)),
-      };
-      await maintainStableVersionBranches(
-        git as GitControl,
-        defaultSupportPolicyMock as SupportPolicy,
-        defaultMatcherMock as StableVersionMatcher,
-      );
+      git.existsBranch.mockReturnValueOnce(Promise.resolve(true)),
+        await maintainStableVersionBranches(
+          git as any,
+          defaultSupportPolicyMock as SupportPolicy,
+          defaultMatcherMock as StableVersionMatcher,
+        );
       expect(git.createBranchFromTag).not.toHaveBeenCalled();
     });
     test("should create new stable version branch from tag if not exists yet", async () => {
       const tag: Partial<Tag> = {};
-      const git: Partial<GitControl> = {
-        ...defaultGitMock,
-        existsBranch: jest.fn((_) => Promise.resolve(false)),
-        getTag: jest.fn((_) => Promise.resolve(tag as Tag)),
-      };
+      git.existsBranch.mockReturnValueOnce(Promise.resolve(false));
+      git.getTag.mockReturnValueOnce(Promise.resolve(tag as Tag));
       await maintainStableVersionBranches(
-        git as GitControl,
+        git as any,
         defaultSupportPolicyMock as SupportPolicy,
         defaultMatcherMock as StableVersionMatcher,
       );
@@ -72,13 +69,9 @@ describe("maintenance", () => {
         getLatestVersion: jest.fn(() => latestVersion),
         supports: jest.fn((version) => version === supported.version),
       };
-      const git: Partial<GitControl> = {
-        ...defaultGitMock,
-        getBranches: jest.fn(() =>
-          Promise.resolve([supported.branch, unsupported.branch, unmatched]),
-        ),
-        deleteBranch: jest.fn(() => Promise.resolve()),
-      };
+      git.getBranches.mockReturnValueOnce(
+        Promise.resolve([supported.branch, unsupported.branch, unmatched]),
+      );
       const matcher: Partial<StableVersionMatcher> = {
         matches: (branch) => branch !== unmatched,
         getVersion: (branch) => {
@@ -93,7 +86,7 @@ describe("maintenance", () => {
         },
       };
       await maintainStableVersionBranches(
-        git as GitControl,
+        git as any,
         policy as SupportPolicy,
         matcher as StableVersionMatcher,
       );

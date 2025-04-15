@@ -1,14 +1,17 @@
 // backporting fix branch to all stable version branches by creating pull request against each of the stable version
-import { GitControl } from "../api/git.js";
-import { getStableVersionBranches } from "./maintenance.js";
+import { Branch, GitControl } from "../api/git.js";
 import { StableVersionMatcher } from "../core/matcher.js";
+import { StableVersionBranch } from "./maintenance.js";
 
 export async function backportFixBranch(
   git: GitControl,
   matcher: StableVersionMatcher,
   fixBranchName: string,
 ) {
-  const stableVersionBranches = await getStableVersionBranches(git, matcher);
+  const branches = await git.getBranches();
+  const stableVersionBranches = branches
+    .map((it) => toStaleVersionBranch(matcher, it))
+    .filter((it) => it !== null);
   const fixBranch = await git.getBranch(fixBranchName);
   for (const it of stableVersionBranches) {
     console.info(
@@ -25,5 +28,19 @@ export async function backportFixBranch(
     console.info(
       `successfully created backport pull request ${pr.number} for stable version ${it.version}.`,
     );
+  }
+}
+
+function toStaleVersionBranch(
+  matcher: StableVersionMatcher,
+  branch: Branch,
+): StableVersionBranch | null {
+  if (matcher.matches(branch)) {
+    return {
+      branch: branch,
+      version: matcher.getVersion(branch),
+    };
+  } else {
+    return null;
   }
 }
