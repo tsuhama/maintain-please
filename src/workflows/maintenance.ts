@@ -24,7 +24,7 @@ export async function maintainStableVersionBranches(
     );
   } else {
     const releaseTag = await git.getTag(
-      `${releasedVersion.major}.${releasedVersion.minor}.${releasedVersion.patch}`,
+      `v${releasedVersion.major}.${releasedVersion.minor}.${releasedVersion.patch}`,
     );
     // create stable-version branch for newly released version
     console.info(
