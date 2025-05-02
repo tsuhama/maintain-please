@@ -18,12 +18,12 @@
     "coverage": "npx make-coverage-badge --output-path ./badges/coverage.svg"
   },
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
+    "@eslint/js": "^9.26.0",
     "@octokit/types": "^14.0.0",
     "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
     "dotenv": "^16.5.0",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.1",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-prettier": "^5.2.6",
     "globals": "^16.0.0",
@@ -34,7 +34,7 @@
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.30.1"
+    "typescript-eslint": "^8.31.1"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
