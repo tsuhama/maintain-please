@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/tsuhama/maintain-please/compare/v2.0.0...v2.0.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* add version tag prefix ([#17](https://github.com/tsuhama/maintain-please/issues/17)) ([b6d4281](https://github.com/tsuhama/maintain-please/commit/b6d4281360614309964d4f573a11fb23d3fea9ea))
+
 ## [2.0.0](https://github.com/tsuhama/maintain-please/compare/v1.1.0...v2.0.0) (2025-04-15)
 
 
