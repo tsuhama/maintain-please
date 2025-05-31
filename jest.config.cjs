@@ -14,4 +14,5 @@ module.exports = {
   transform: {
     "^.+\.tsx?$": ["ts-jest", { useESM: true }],
   },
+  reporters: ["default", "jest-junit"],
 };
