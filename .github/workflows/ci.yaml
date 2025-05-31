@@ -40,6 +40,7 @@ jobs:
         run: npm run test
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled()) && always()
         with:
           files: |
             test-results/**/*.xml
