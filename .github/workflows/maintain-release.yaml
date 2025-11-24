@@ -16,7 +16,7 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: ${{ steps.release-please.outputs.release_created }}
       - name: Setup Node.js
         id: setup-node
